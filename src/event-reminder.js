@@ -21,7 +21,7 @@ async function run() {
 
   if ( dateIs(datetimeEst, 'friday') ) {
     const nextWeek = episodesFuture.shift();
-    const nextWeekDate = new Date(nextWeek.date);
+    const nextWeekDate = dateToLocalTime(nextWeek.date);
     const nextWeekTimeString = nextWeekDate.toLocaleTimeString('en-us')
     const nextWeekTime = nextWeekTimeString.split(':').splice(0,2).join(':')
     const nextWeekAmPm = nextWeekTimeString.split(' ').slice(-1)[0].toLowerCase();
