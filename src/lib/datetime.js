@@ -74,3 +74,52 @@ function dateIs(date, search) {
 }
 
 module.exports.dateIs = dateIs;
+
+
+
+/**
+ * getDatetimeTime
+ */
+
+function getDatetimeTime(date) {
+  if (!(date instanceof Date)) {
+    date = new Date(date);
+  }
+
+  const timestring = date.toLocaleTimeString('en-us');
+  return timestring.split(':').splice(0,2).join(':');
+}
+
+module.exports.getDatetimeTime = getDatetimeTime;
+
+/**
+ * getDatetimeMeridiem
+ */
+
+function getDatetimeMeridiem(date) {
+  if (!(date instanceof Date)) {
+    date = new Date(date);
+  }
+
+  const timestring = date.toLocaleTimeString('en-us');
+  
+  return timestring.split(' ').slice(-1)[0].toLowerCase();
+}
+
+module.exports.getDatetimeMeridiem = getDatetimeMeridiem
+
+/**
+ * getDatetimeShortDate
+ */
+
+function getDatetimeShortDate(date) {
+  if (!(date instanceof Date)) {
+    date = new Date(date);
+  }
+
+  const datestring = date.toLocaleDateString();
+  
+  return datestring.split('/').splice(0,2).join('/');
+}
+
+module.exports.getDatetimeShortDate = getDatetimeShortDate
