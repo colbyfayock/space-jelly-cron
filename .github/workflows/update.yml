@@ -2,8 +2,7 @@ name: Update
 
 on:
   schedule:
-    - cron: "0 14 * * *"
-    - cron: "0 20 * * *"
+    - cron: "0 15 * * *"
   workflow_dispatch:
 
 jobs:
@@ -18,12 +17,9 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-      - run: node src/main.js
+      - run: node src/event-reminder.js
         env:
-          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
-          MAIL_TO: ${{ secrets.MAIL_TO }}
-          MAIL_FROM: ${{ secrets.MAIL_FROM }}
-        
-      - uses: mikeal/publish-to-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SPACE_JELLY_TWITTER_CONSUMER_KEY: ${{ secrets.SPACE_JELLY_TWITTER_CONSUMER_KEY }}
+          SPACE_JELLY_TWITTER_CONSUMER_SECRET: ${{ secrets.SPACE_JELLY_TWITTER_CONSUMER_SECRET }}
+          SPACE_JELLY_TWITTER_ACCESS_TOKEN_KEY: ${{ secrets.SPACE_JELLY_TWITTER_ACCESS_TOKEN_KEY }}
+          SPACE_JELLY_TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.SPACE_JELLY_TWITTER_ACCESS_TOKEN_SECRET }}
