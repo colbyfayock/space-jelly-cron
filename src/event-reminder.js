@@ -26,6 +26,10 @@ async function run() {
     const nextWeekTime = nextWeekTimeString.split(':').splice(0,2).join(':')
     const nextWeekAmPm = nextWeekTimeString.split(' ').slice(-1)[0].toLowerCase();
 
+    console.log('nextWeek.date', nextWeek.date)
+    console.log('nextWeekDate', nextWeekDate)
+    console.log('nextWeekTimeString', nextWeekTimeString)
+
     const weekAfter = episodesFuture.shift();
     const weekAfterDate = new Date(weekAfter.date);
 
@@ -45,14 +49,14 @@ ${weekAfter.title}
 
 https://spacejelly.dev/colbyashi-maru`;
 
-    try {
-      await tweet({
-        status,
-        media: nextWeek.socialImage && nextWeek.socialImage.sourceUrl
-      });
-    } catch(e) {
-      console.log('Error', e)
-    }
+    // try {
+    //   await tweet({
+    //     status,
+    //     media: nextWeek.socialImage && nextWeek.socialImage.sourceUrl
+    //   });
+    // } catch(e) {
+    //   console.log('Error', e)
+    // }
   }
 }
 
