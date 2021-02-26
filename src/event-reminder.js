@@ -31,7 +31,7 @@ async function run() {
 
     const status = `📣 Next Week! 📣
 
-👾 @/${nextWeek.twitterhandle} faces off on Colbyashi Maru
+👾 @${nextWeek.twitterhandle} faces off on Colbyashi Maru
 
 ⚡️ ${nextWeek.title}
 
@@ -41,7 +41,7 @@ And later...
 
 ${weekAfter.title}
 
-📆 ${weekAfterDate.toLocaleDateString().split('/').splice(0,2).join('/')} @/${weekAfter.twitterhandle}
+📆 ${weekAfterDate.toLocaleDateString().split('/').splice(0,2).join('/')} @${weekAfter.twitterhandle}
 
 https://spacejelly.dev/colbyashi-maru`;
 
