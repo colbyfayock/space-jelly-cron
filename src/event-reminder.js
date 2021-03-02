@@ -35,7 +35,7 @@ async function run() {
   if ( dateIs(currentDatetimeEst, 'monday') ) {
     status = `📣 Upcoming Colbyashi Maru
 
-⚡️ ${maxLength(twoAfter.title, 100)}
+⚡️ ${maxLength(upcoming.title, 100)}
 👾 @${upcoming.twitterhandle}
 📆 ${getDatetimeShortDate(upcomingDate)} @ ${getDatetimeTime(upcomingDate)}${getDatetimeMeridiem(upcomingDate)} EST
 
