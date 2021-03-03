@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const {
   dateIsFuture,
+  dateIsPast,
   sortObjectsByDate,
   dateToLocalTime,
   dateIs,
@@ -17,6 +18,9 @@ async function run() {
   const episodes = await getColbyashMaruEpisodes();
   const episodesSorted = sortObjectsByDate(episodes);
   const episodesFuture = episodesSorted.filter((episode) => dateIsFuture(episode.date)).reverse();
+  const episodesPast = episodesSorted.filter((episode) => dateIsPast(episode.date));
+
+  const last = episodesPast.shift();
 
   const upcoming = episodesFuture.shift();
   const upcomingDate = dateToLocalTime(upcoming.date);
@@ -28,7 +32,6 @@ async function run() {
   const twoAfterDate = dateToLocalTime(twoAfter.date);
 
   const currentDatetimeEst = dateToLocalTime(new Date());
-
 
   let status, media;
 
@@ -88,8 +91,16 @@ https://www.twitch.tv/colbyfayock`;
     media = upcoming.socialImage && upcoming.socialImage.sourceUrl;
   }
 
-  if ( dateIs(currentDatetimeEst, 'thursday') ) {
-    // ICYMI
+  if ( dateIs(currentDatetimeEst, 'thursday') && last.youtube ) {
+    status = `Missed yesterday's Colbyashi Maru?
+
+@${last.twitterhandle} faced off against ${last.title}
+
+Catch the replay after the jump!
+
+${last.youtube}`;
+
+    media = last.socialImage && last.socialImage.sourceUrl;
   }
 
   if ( dateIs(currentDatetimeEst, 'friday') ) {
