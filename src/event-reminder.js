@@ -99,8 +99,6 @@ https://www.twitch.tv/colbyfayock`;
 Catch the replay after the jump!
 
 ${last.youtube}`;
-
-    media = last.socialImage && last.socialImage.sourceUrl;
   }
 
   if ( dateIs(currentDatetimeEst, 'friday') ) {
