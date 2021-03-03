@@ -70,6 +70,24 @@ https://www.twitch.tv/colbyfayock`;
     media = upcoming.socialImage && upcoming.socialImage.sourceUrl;
   }
 
+  if ( dateIs(currentDatetimeEst, 'wednesday') ) {
+    status = `💥💥 TODAY! 💥💥
+
+👾 @${upcoming.twitterhandle} faces off on Colbyashi Maru
+
+⚡️ ⚡️ ⚡️ ⚡️ ⚡️
+${upcoming.title}
+⚡️ ⚡️ ⚡️ ⚡️ ⚡ 
+
+📆 ${getDatetimeShortDate(upcomingDate)} @ ${getDatetimeTime(upcomingDate)}${getDatetimeMeridiem(upcomingDate)} EST
+
+🔔 Follow on Twitch to get notified when we go live!
+
+https://www.twitch.tv/colbyfayock`;
+
+    media = upcoming.socialImage && upcoming.socialImage.sourceUrl;
+  }
+
   if ( dateIs(currentDatetimeEst, 'thursday') ) {
     // ICYMI
   }
