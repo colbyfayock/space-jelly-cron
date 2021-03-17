@@ -1,3 +1,5 @@
+const { format, parse, parseISO, isBefore, isAfter, getDay } = require('date-fns');
+
 /**
  * sortObjectsByDate
  */
@@ -12,12 +14,9 @@ module.exports.sortObjectsByDate = sortObjectsByDate;
  * dateIsPast
  */
 
-function dateIsPast(date, offset = 0) {
-  if (!(date instanceof Date)) {
-    date = new Date(date);
-  }
-
-  return date < new Date(new Date().getTime() + offset);
+function dateIsPast(date) {
+  const parsed = parseISO(date);
+  return isBefore(parsed, new Date().getTime());
 }
 
 module.exports.dateIsPast = dateIsPast;
@@ -26,45 +25,25 @@ module.exports.dateIsPast = dateIsPast;
  * dateIsFuture
  */
 
-function dateIsFuture(date, offset = 0) {
-  if (!(date instanceof Date)) {
-    date = new Date(date);
-  }
-
-  return date > new Date(new Date().getTime() + offset);
+function dateIsFuture(date) {
+  const parsed = parseISO(date);
+  return isAfter(parsed, new Date().getTime());
 }
 
 module.exports.dateIsFuture = dateIsFuture;
-
-/**
- * dateToLocalTime
- * @via https://stackoverflow.com/questions/36206260/how-to-set-date-always-to-eastern-time-regardless-of-users-time-zone
- */
-
-function dateToLocalTime(date, offset = -300) {
-  if (!(date instanceof Date)) {
-    date = new Date(date);
-  }
-
-  date.setTime(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
-
-  return new Date(date.getTime() + offset * 60 * 1000);
-}
-
-module.exports.dateToLocalTime = dateToLocalTime;
 
 /**
  * dateIs
  */
 
 const dateIsVaues = {
-  'sunday': (date) => date.getDay() === 0,
-  'monday': (date) => date.getDay() === 1,
-  'tuesday': (date) => date.getDay() === 2,
-  'wednesday': (date) => date.getDay() === 3,
-  'thursday': (date) => date.getDay() === 4,
-  'friday': (date) => date.getDay() === 5,
-  'saturday': (date) => date.getDay() === 6
+  'sunday': (date) => getDay(date) === 0,
+  'monday': (date) => getDay(date) === 1,
+  'tuesday': (date) => getDay(date) === 2,
+  'wednesday': (date) => getDay(date) === 3,
+  'thursday': (date) => getDay(date) === 4,
+  'friday': (date) => getDay(date) === 5,
+  'saturday': (date) => getDay(date) === 6
 }
 
 function dateIs(date, search) {
@@ -81,13 +60,11 @@ module.exports.dateIs = dateIs;
  * getDatetimeTime
  */
 
-function getDatetimeTime(date) {
-  if (!(date instanceof Date)) {
-    date = new Date(date);
-  }
-
-  const timestring = date.toLocaleTimeString('en-us');
-  return timestring.split(':').splice(0,2).join(':');
+function getDatetimeTime(date, timeZone = 'America/New_York') {
+  const parsed = parseISO(date);
+  return format(parsed, "h:mmaaaaa'm'", {
+    timeZone
+  });
 }
 
 module.exports.getDatetimeTime = getDatetimeTime;
@@ -112,14 +89,11 @@ module.exports.getDatetimeMeridiem = getDatetimeMeridiem
  * getDatetimeShortDate
  */
 
-function getDatetimeShortDate(date) {
-  if (!(date instanceof Date)) {
-    date = new Date(date);
-  }
-
-  const datestring = date.toLocaleDateString();
-  
-  return datestring.split('/').splice(0,2).join('/');
+function getDatetimeShortDate(date, timeZone = 'America/New_York') {
+  const parsed = parseISO(date);
+  return format(parsed, 'M/dd', {
+    timeZone
+  });
 }
 
 module.exports.getDatetimeShortDate = getDatetimeShortDate

@@ -4,10 +4,8 @@ const {
   dateIsFuture,
   dateIsPast,
   sortObjectsByDate,
-  dateToLocalTime,
   dateIs,
   getDatetimeTime,
-  getDatetimeMeridiem,
   getDatetimeShortDate
 } = require('./lib/datetime');
 const { getColbyashMaruEpisodes } = require('./lib/space-jelly');
@@ -23,30 +21,25 @@ async function run() {
   const last = episodesPast.shift();
 
   const upcoming = episodesFuture.shift();
-  const upcomingDate = dateToLocalTime(upcoming.date);
-
   const weekAfter = episodesFuture.shift();
-  const weekAfterDate = dateToLocalTime(weekAfter.date);
-
   const twoAfter = episodesFuture.shift();
-  const twoAfterDate = dateToLocalTime(twoAfter.date);
 
-  const currentDatetimeEst = dateToLocalTime(new Date());
+  const timeToday = new Date().getTime();
 
   let status, media;
 
-  if ( dateIs(currentDatetimeEst, 'monday') ) {
+  if ( dateIs(timeToday, 'monday') ) {
     status = `📣 Upcoming Colbyashi Maru
 
 ⚡️ ${maxLength(upcoming.title, 100)}
 👾 @${upcoming.twitterhandle}
-📆 ${getDatetimeShortDate(upcomingDate)} @ ${getDatetimeTime(upcomingDate)}${getDatetimeMeridiem(upcomingDate)} EST
+📆 ${getDatetimeShortDate(upcoming.date)} @ ${getDatetimeTime(upcoming.date)} EST
 
 👾 @${weekAfter.twitterhandle}
-📆 ${getDatetimeShortDate(weekAfterDate)} @ ${getDatetimeTime(weekAfterDate)}${getDatetimeMeridiem(weekAfterDate)} EST
+📆 ${getDatetimeShortDate(weekAfter.date)} @ ${getDatetimeTime(weekAfter.date)} EST
 
 👾 @${twoAfter.twitterhandle}
-📆 ${getDatetimeShortDate(twoAfterDate)} @ ${getDatetimeTime(twoAfterDate)}${getDatetimeMeridiem(twoAfterDate)} EST
+📆 ${getDatetimeShortDate(twoAfter.date)} @ ${getDatetimeTime(twoAfter.date)} EST
 
 Add to your calendar and watch past episodes below!
 
@@ -55,7 +48,7 @@ https://spacejelly.dev/colbyashi-maru`;
     media = upcoming.socialImage && upcoming.socialImage.sourceUrl;
   }
 
-  if ( dateIs(currentDatetimeEst, 'tuesday') ) {
+  if ( dateIs(timeToday, 'tuesday') ) {
     status = `📣 Tomorrow! 📣
 
 👾 @${upcoming.twitterhandle} faces off on Colbyashi Maru
@@ -64,7 +57,7 @@ https://spacejelly.dev/colbyashi-maru`;
 ${upcoming.title}
 ⚡️ ⚡️ ⚡️ ⚡️ ⚡️ 
 
-📆 ${getDatetimeShortDate(upcomingDate)} @ ${getDatetimeTime(upcomingDate)}${getDatetimeMeridiem(upcomingDate)} EST
+📆 ${getDatetimeShortDate(upcoming.date)} @ ${getDatetimeTime(upcoming.date)} EST
 
 🔔 Follow on Twitch to get notified when we go live!
 
@@ -73,7 +66,7 @@ https://www.twitch.tv/colbyfayock`;
     media = upcoming.socialImage && upcoming.socialImage.sourceUrl;
   }
 
-  if ( dateIs(currentDatetimeEst, 'wednesday') ) {
+  if ( dateIs(timeToday, 'wednesday') ) {
     status = `💥💥 TODAY! 💥💥
 
 👾 @${upcoming.twitterhandle} faces off on Colbyashi Maru
@@ -82,7 +75,7 @@ https://www.twitch.tv/colbyfayock`;
 ${upcoming.title}
 ⚡️ ⚡️ ⚡️ ⚡️ ⚡ 
 
-📆 ${getDatetimeShortDate(upcomingDate)} @ ${getDatetimeTime(upcomingDate)}${getDatetimeMeridiem(upcomingDate)} EST
+📆 ${getDatetimeShortDate(upcoming.date)} @ ${getDatetimeTime(upcoming.date)} EST
 
 🔔 Follow on Twitch to get notified when we go live!
 
@@ -91,7 +84,7 @@ https://www.twitch.tv/colbyfayock`;
     media = upcoming.socialImage && upcoming.socialImage.sourceUrl;
   }
 
-  if ( dateIs(currentDatetimeEst, 'thursday') && last.youtube ) {
+  if ( dateIs(timeToday, 'thursday') && last.youtube ) {
     status = `Missed yesterday's Colbyashi Maru?
 
 @${last.twitterhandle} faced off against ${last.title}
@@ -101,35 +94,37 @@ Catch the replay after the jump!
 ${last.youtube}`;
   }
 
-  if ( dateIs(currentDatetimeEst, 'friday') ) {
+  if ( dateIs(timeToday, 'friday') ) {
     status = `📣 Next Week! 📣
 
 👾 @${upcoming.twitterhandle} faces off on Colbyashi Maru
 
 ⚡️ ${upcoming.title}
 
-📆 ${getDatetimeShortDate(upcomingDate)} @ ${getDatetimeTime(upcomingDate)}${getDatetimeMeridiem(upcomingDate)} EST
+📆 ${getDatetimeShortDate(upcoming.date)} @ ${getDatetimeTime(upcoming.date)} EST
 
 And later...
 
 ${weekAfter.title}
 
-📆 ${getDatetimeShortDate(weekAfterDate)} @${weekAfter.twitterhandle}
+📆 ${getDatetimeShortDate(weekAfter.date)} @${weekAfter.twitterhandle}
 
 https://spacejelly.dev/colbyashi-maru`;
 
     media = upcoming.socialImage && upcoming.socialImage.sourceUrl;
   }
 
+  console.log('status', status)
+
   if ( status ) {
-    try {
-      await tweet({
-        status,
-        media
-      });
-    } catch(e) {
-      console.log('Error', e)
-    }
+    // try {
+    //   await tweet({
+    //     status,
+    //     media
+    //   });
+    // } catch(e) {
+    //   console.log('Error', e)
+    // }
   }
 }
 
