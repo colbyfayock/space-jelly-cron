@@ -1,4 +1,5 @@
-const { format, parse, parseISO, isBefore, isAfter, getDay } = require('date-fns');
+const { format, parseISO, isBefore, isAfter, getDay } = require('date-fns');
+const { utcToZonedTime } = require('date-fns-tz');
 
 /**
  * sortObjectsByDate
@@ -37,23 +38,42 @@ module.exports.dateIsFuture = dateIsFuture;
  */
 
 const dateIsVaues = {
-  'sunday': (date) => getDay(date) === 0,
-  'monday': (date) => getDay(date) === 1,
-  'tuesday': (date) => getDay(date) === 2,
-  'wednesday': (date) => getDay(date) === 3,
-  'thursday': (date) => getDay(date) === 4,
-  'friday': (date) => getDay(date) === 5,
-  'saturday': (date) => getDay(date) === 6
+  'sunday': (date, timeZone) => {
+    const parsed = utcToZonedTime(date, timeZone);
+    return getDay(date) === 0
+  },
+  'monday': (date, timeZone) => {
+    const parsed = utcToZonedTime(date, timeZone);
+    return getDay(parsed) === 1;
+  },
+  'tuesday': (date, timeZone) => {
+    const parsed = utcToZonedTime(date, timeZone);
+    return getDay(parsed) === 2;
+  },
+  'wednesday': (date, timeZone) => {
+    const parsed = utcToZonedTime(date, timeZone);
+    return getDay(parsed) === 3;
+  },
+  'thursday': (date, timeZone) => {
+    const parsed = utcToZonedTime(date, timeZone);
+    return getDay(parsed) === 4;
+  },
+  'friday': (date, timeZone) => {
+    const parsed = utcToZonedTime(date, timeZone);
+    return getDay(parsed) === 5;
+  },
+  'saturday': (date, timeZone) => {
+    const parsed = utcToZonedTime(date, timeZone);
+    return getDay(parsed) === 6;
+  }
 }
 
-function dateIs(date, search) {
+function dateIs(date, search, timeZone = 'America/New_York') {
   search = search.toLowerCase();
-
-  return dateIsVaues[search] && dateIsVaues[search](date);
+  return dateIsVaues[search] && dateIsVaues[search](date, timeZone);
 }
 
 module.exports.dateIs = dateIs;
-
 
 
 /**
@@ -61,7 +81,7 @@ module.exports.dateIs = dateIs;
  */
 
 function getDatetimeTime(date, timeZone = 'America/New_York') {
-  const parsed = parseISO(date);
+  const parsed = utcToZonedTime(date, timeZone);
   return format(parsed, "h:mmaaaaa'm'", {
     timeZone
   });
@@ -70,27 +90,11 @@ function getDatetimeTime(date, timeZone = 'America/New_York') {
 module.exports.getDatetimeTime = getDatetimeTime;
 
 /**
- * getDatetimeMeridiem
- */
-
-function getDatetimeMeridiem(date) {
-  if (!(date instanceof Date)) {
-    date = new Date(date);
-  }
-
-  const timestring = date.toLocaleTimeString('en-us');
-  
-  return timestring.split(' ').slice(-1)[0].toLowerCase();
-}
-
-module.exports.getDatetimeMeridiem = getDatetimeMeridiem
-
-/**
  * getDatetimeShortDate
  */
 
 function getDatetimeShortDate(date, timeZone = 'America/New_York') {
-  const parsed = parseISO(date);
+  const parsed = utcToZonedTime(date, timeZone);
   return format(parsed, 'M/dd', {
     timeZone
   });
