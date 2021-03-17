@@ -114,17 +114,19 @@ https://spacejelly.dev/colbyashi-maru`;
     media = upcoming.socialImage && upcoming.socialImage.sourceUrl;
   }
 
-  console.log('status', status)
-
   if ( status ) {
-    // try {
-    //   await tweet({
-    //     status,
-    //     media
-    //   });
-    // } catch(e) {
-    //   console.log('Error', e)
-    // }
+    console.log('Updating status!')
+    console.log(status);
+    try {
+      await tweet({
+        status,
+        media
+      });
+    } catch(e) {
+      console.log('Error', e)
+    }
+  } else {
+    console.log('No status found for today!');
   }
 }
 
