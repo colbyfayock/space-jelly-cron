@@ -29,94 +29,146 @@ async function run() {
   let status, media;
 
   if ( dateIs(timeToday, 'monday') ) {
-    status = `📣 Upcoming Colbyashi Maru
 
-⚡️ ${maxLength(upcoming.title, 100)}
-👾 @${upcoming.twitterhandle}
-📆 ${getDatetimeShortDate(upcoming.date)} @ ${getDatetimeTime(upcoming.date)} EST
+    if ( !upcoming ) {
+      console.log('No upcoming episodes');
+      return;
+    }
 
-👾 @${weekAfter.twitterhandle}
-📆 ${getDatetimeShortDate(weekAfter.date)} @ ${getDatetimeTime(weekAfter.date)} EST
+    status = [
+      `📣 Upcoming Colbyashi Maru`,
+      ``,
+      `⚡️ ${maxLength(upcoming.title, 100)}`,
+      `👾 @${upcoming.twitterhandle}`,
+      `📆 ${getDatetimeShortDate(upcoming.date)} @ ${getDatetimeTime(upcoming.date)} EST`,
 
-👾 @${twoAfter.twitterhandle}
-📆 ${getDatetimeShortDate(twoAfter.date)} @ ${getDatetimeTime(twoAfter.date)} EST
+      weekAfter && ``,
+      weekAfter &&
+        `👾 @${weekAfter.twitterhandle}`,
+      weekAfter &&
+        `📆 ${getDatetimeShortDate(weekAfter.date)} @ ${getDatetimeTime(weekAfter.date)} EST`,
 
-Add to your calendar and watch past episodes below!
+      twoAfter && ``,
+      twoAfter &&
+        `👾 @${twoAfter.twitterhandle}`,
+      twoAfter &&
+        `📆 ${getDatetimeShortDate(twoAfter.date)} @ ${getDatetimeTime(twoAfter.date)} EST`,
 
-https://spacejelly.dev/colbyashi-maru`;
+      ``,
+      `Add to your calendar and watch past episodes below!`,
+      ``,
+      `https://spacejelly.dev/colbyashi-maru`
+    ]
 
     media = upcoming.socialImage && upcoming.socialImage.sourceUrl;
   }
 
   if ( dateIs(timeToday, 'tuesday') ) {
-    status = `📣 Tomorrow! 📣
 
-👾 @${upcoming.twitterhandle} faces off on Colbyashi Maru
+    if ( !upcoming ) {
+      console.log('No upcoming episodes');
+      return;
+    }
 
-⚡️ ⚡️ ⚡️ ⚡️ ⚡️ 
-${upcoming.title}
-⚡️ ⚡️ ⚡️ ⚡️ ⚡️ 
-
-📆 ${getDatetimeShortDate(upcoming.date)} @ ${getDatetimeTime(upcoming.date)} EST
-
-🔔 Follow on Twitch to get notified when we go live!
-
-https://www.twitch.tv/colbyfayock`;
+    status = [
+      `📣 Tomorrow! 📣`,
+      ``,
+      `👾 @${upcoming.twitterhandle} faces off on Colbyashi Maru`,
+      ``,
+      `⚡️ ⚡️ ⚡️ ⚡️ ⚡️`,
+      `${upcoming.title}`,
+      `⚡️ ⚡️ ⚡️ ⚡️ ⚡️`,
+      ``,
+      `📆 ${getDatetimeShortDate(upcoming.date)} @ ${getDatetimeTime(upcoming.date)} EST`,
+      ``,
+      `🔔 Follow on Twitch to get notified when we go live!`,
+      ``,
+      `https://www.twitch.tv/colbyfayock`
+    ];
 
     media = upcoming.socialImage && upcoming.socialImage.sourceUrl;
   }
 
   if ( dateIs(timeToday, 'wednesday') ) {
-    status = `💥💥 TODAY! 💥💥
 
-👾 @${upcoming.twitterhandle} faces off on Colbyashi Maru
+    if ( !upcoming ) {
+      console.log('No upcoming episodes');
+      return;
+    }
 
-⚡️ ⚡️ ⚡️ ⚡️ ⚡️
-${upcoming.title}
-⚡️ ⚡️ ⚡️ ⚡️ ⚡ 
-
-📆 ${getDatetimeShortDate(upcoming.date)} @ ${getDatetimeTime(upcoming.date)} EST
-
-🔔 Follow on Twitch to get notified when we go live!
-
-https://www.twitch.tv/colbyfayock`;
+    status = [
+      `💥💥 TODAY! 💥💥`,
+      ``,
+      `👾 @${upcoming.twitterhandle} faces off on Colbyashi Maru`,
+      ``,
+      `⚡️ ⚡️ ⚡️ ⚡️ ⚡️`,
+      `${upcoming.title}`,
+      `⚡️ ⚡️ ⚡️ ⚡️ ⚡`,
+      ``,
+      `📆 ${getDatetimeShortDate(upcoming.date)} @ ${getDatetimeTime(upcoming.date)} EST`,
+      ``,
+      `🔔 Follow on Twitch to get notified when we go live!`,
+      ``,
+      `https://www.twitch.tv/colbyfayock`
+    ]
 
     media = upcoming.socialImage && upcoming.socialImage.sourceUrl;
   }
 
   if ( dateIs(timeToday, 'thursday') && last.youtube ) {
-    status = `Missed yesterday's Colbyashi Maru?
-
-@${last.twitterhandle} faced off against ${last.title}
-
-Catch the replay after the jump!
-
-${last.youtube}`;
+    status = [
+      `Missed yesterday's Colbyashi Maru?`,
+      ``,
+      `@${last.twitterhandle} faced off against ${last.title}`,
+      ``,
+      `Catch the replay after the jump!`,
+      ``,
+      `${last.youtube}`
+    ]
   }
 
   if ( dateIs(timeToday, 'friday') ) {
-    status = `📣 Next Week! 📣
+    if ( !upcoming ) {
+      console.log('No upcoming episodes');
+      return;
+    }
 
-👾 @${upcoming.twitterhandle} faces off on Colbyashi Maru
+    status = [
+      `📣 Next Week! 📣`,
+      ``,
+      `👾 @${upcoming.twitterhandle} faces off on Colbyashi Maru`,
+      ``,
+      `⚡️ ${upcoming.title}`,
+      ``,
+      `📆 ${getDatetimeShortDate(upcoming.date)} @ ${getDatetimeTime(upcoming.date)} EST`,
 
-⚡️ ${upcoming.title}
+      weekAfter && ``,
+      weekAfter &&
+        `And later...`,
+      weekAfter && ``,
+      weekAfter &&
+        `${weekAfter.title}`,
+      weekAfter && ``,
+      weekAfter &&
+        `📆 ${getDatetimeShortDate(weekAfter.date)} @${weekAfter.twitterhandle}`,
 
-📆 ${getDatetimeShortDate(upcoming.date)} @ ${getDatetimeTime(upcoming.date)} EST
-
-And later...
-
-${weekAfter.title}
-
-📆 ${getDatetimeShortDate(weekAfter.date)} @${weekAfter.twitterhandle}
-
-https://spacejelly.dev/colbyashi-maru`;
+      ``,
+      `https://spacejelly.dev/colbyashi-maru`,
+    ]
 
     media = upcoming.socialImage && upcoming.socialImage.sourceUrl;
   }
 
   if ( status ) {
-    console.log('Updating status!')
+
+    if ( Array.isArray(status) ) {
+      status = status.filter(segment => typeof segment === 'string');
+      status = status.join('\n');
+    }
+
+    console.log('=== Updating status! ===')
     console.log(status);
+    console.log('=== End status! ===')
     try {
       await tweet({
         status,
