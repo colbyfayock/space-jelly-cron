@@ -20,5 +20,5 @@ jobs:
       - run: node src/printer-refresh.js
         env:
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
-          PRINTER_REFRESH_MAIL_TO: ${{ secrets.MAIL_TO }}
-          PRINTER_REFRESH_MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          PRINTER_REFRESH_MAIL_TO: ${{ secrets.PRINTER_REFRESH_MAIL_TO }}
+          PRINTER_REFRESH_MAIL_FROM: ${{ secrets.PRINTER_REFRESH_MAIL_FROM }}
