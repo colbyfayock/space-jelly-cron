@@ -94,11 +94,13 @@ async function updateTwitterStatus(options = {}) {
   const twitter = getTwitterClient();
 
   let response;
+  console.log(options)
 
   try {
     response = await twitter.post('statuses/update', options);
   } catch(e) {
-    throw new Error(`${errorBase}: ${e.message}`);
+
+    throw new Error(`${errorBase}: ${e.message || e.errors.map(({message}) => message ).join(', ')}`);
   }
 
   return response;
