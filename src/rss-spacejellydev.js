@@ -7,7 +7,9 @@ const { tweet } = require('./lib/twitter');
 const RSS_URL = 'https://www.spacejelly.dev/feed.xml';
 
 (async function run() {
-  console.log('=== Begin RSS colbyfayock.com ===')
+  console.log('=== Begin RSS colbyfayock.com ===');
+
+  console.log(`Current run ${new Date().toUTCString()}`);
 
   const { lastRun } = await getRssData();
 
