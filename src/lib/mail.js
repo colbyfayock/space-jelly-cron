@@ -11,8 +11,8 @@ async function sendMail({ subject, message, attachments = [] }) {
   const errorBase = 'Failed to send mail';
 
   const msg = {
-    to: process.env.MAIL_TO,
-    from: process.env.MAIL_FROM,
+    to: process.env.PRINTER_REFRESH_MAIL_TO,
+    from: process.env.PRINTER_REFRESH_MAIL_FROM,
     subject,
     text: message,
     html: message.replace(/\r\n/g, '<br>'),
