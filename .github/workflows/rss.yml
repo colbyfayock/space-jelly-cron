@@ -1,4 +1,4 @@
-name: Printer Refresh
+name: RSS
 
 on:
   schedule:
