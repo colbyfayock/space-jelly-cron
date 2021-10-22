@@ -18,8 +18,11 @@ async function sendMail({ subject, message, attachments = [] }) {
     html: message.replace(/\r\n/g, '<br>'),
   };
 
+  console.log(`Found ${attachments.length} attachments...`);
+
   if ( attachments.length > 0 ) {
-    msg.attachments = await Promise.all(attachments.map(async ({ url, type, filename } = {}) => {
+    msg.attachments = await Promise.all(attachments.map(async ({ url, type, filename } = {}, index) => {
+      console.log(`Processing attachment ${index + 1} / ${attachments.length}`)
       const response = await fetch(url);
       const buffer = await response.buffer();
 
