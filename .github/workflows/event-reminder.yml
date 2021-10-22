@@ -1,8 +1,6 @@
 name: Event Reminders
 
 on:
-  schedule:
-    - cron: "0 14 * * *"
   workflow_dispatch:
 
 jobs:
