@@ -3,6 +3,8 @@ require('dotenv').config();
 const { sendMail } = require('./lib/mail');
 
 (async function run() {
+  console.log('=== Begin Printer Refresh ===')
+  console.log('Sending test print...')
   await sendMail({
     subject: 'Refreshing the spools',
     message: ' ',
@@ -14,4 +16,5 @@ const { sendMail } = require('./lib/mail');
       }
     ]
   });
+  console.log('=== Begin Printer Refresh ===')
 })();

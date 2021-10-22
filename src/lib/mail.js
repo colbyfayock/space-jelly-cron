@@ -10,6 +10,8 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 async function sendMail({ subject, message, attachments = [] }) {
   const errorBase = 'Failed to send mail';
 
+  console.log('Constructing message...');
+
   const msg = {
     to: process.env.PRINTER_REFRESH_MAIL_TO,
     from: process.env.PRINTER_REFRESH_MAIL_FROM,
@@ -34,6 +36,8 @@ async function sendMail({ subject, message, attachments = [] }) {
       }
     }))
   }
+
+  console.log('Sending mail...');
 
   try {
     await sgMail.send(msg);

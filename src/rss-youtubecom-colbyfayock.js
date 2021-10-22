@@ -4,10 +4,10 @@ const { readFeedFromUrl, promiseToConvertXmlToJson } = require('./lib/rss');
 const { getRssData } = require('./lib/rss');
 const { tweet } = require('./lib/twitter');
 
-const RSS_URL = 'https://www.spacejelly.dev/feed.xml';
+const RSS_URL = 'https://www.youtube.com/feeds/videos.xml?channel_id=UC7Wpv0Aft4NPNhHWW_JC4GQ';
 
 (async function run() {
-  console.log('=== Begin RSS spacejelly.dev ===');
+  console.log('=== Begin RSS youtube.com/colbyfayock ===');
 
   console.log(`Current run ${new Date().toUTCString()}`);
 
@@ -18,12 +18,12 @@ const RSS_URL = 'https://www.spacejelly.dev/feed.xml';
   const feed = await readFeedFromUrl(RSS_URL);
   const json = await promiseToConvertXmlToJson(feed);
 
-  const items = json.rss.channel[0].item;
+  const items = json.feed.entry;
 
   console.log(`Found ${items.length} items in feed...`);
 
   const newItems = items.filter(item => {
-    const pubDate = item.pubDate[0];
+    const pubDate = item.published[0];
     return new Date(pubDate) > new Date(lastRun);
   });
 
@@ -34,10 +34,10 @@ const RSS_URL = 'https://www.spacejelly.dev/feed.xml';
 
     await Promise.all(newItems.map(async (item) => {
       const title = item.title[0];
-      const link = item.link[0];
+      const link = item.link[0].$.href;
 
       const status = [
-        '📝 New Post!',
+        '📺 New Video!',
         '',
         title,
         '',
@@ -58,5 +58,5 @@ const RSS_URL = 'https://www.spacejelly.dev/feed.xml';
     }))
   }
 
-  console.log('=== End RSS spacejelly.dev ===')
+  console.log('=== End RSS youtube.com/colbyfayock ===')
 })();
