@@ -27,3 +27,7 @@ jobs:
       - run: node src/rss-spacejellydev.js
 
       - run: node src/rss-cleanup.js
+
+      - uses: mikeal/publish-to-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
