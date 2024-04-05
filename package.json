@@ -1,6 +1,6 @@
 {
   "name": "space-jelly-cron",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "src/main.js",
   "repository": "git@github.com:colbyfayock/space-jelly-cron.git",
   "author": "Colby Fayock <hello@colbyfayock.com>",
