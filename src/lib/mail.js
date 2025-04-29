@@ -1,49 +1,37 @@
-const sgMail = require('@sendgrid/mail');
-const fetch = require('node-fetch');
+const { Resend } = require('resend');
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * sendMail
  */
 
-async function sendMail({ to = process.env.PRINTER_REFRESH_MAIL_TO, from = process.env.PRINTER_REFRESH_MAIL_FROM, subject, message, attachments = [] }) {
+async function sendMail({ to = process.env.MAIL_TO, from = process.env.MAIL_FROM, subject, message }) {
   const errorBase = 'Failed to send mail';
 
   console.log('Constructing message...');
 
-  const msg = {
-    to,
-    from,
-    subject,
-    text: message,
-    html: message.replace(/\r\n/g, '<br>'),
-  };
-
-  console.log(`Found ${attachments.length} attachments...`);
-
-  if ( attachments.length > 0 ) {
-    msg.attachments = await Promise.all(attachments.map(async ({ url, type, filename } = {}, index) => {
-      console.log(`Processing attachment ${index + 1} / ${attachments.length}`)
-      const response = await fetch(url);
-      const buffer = await response.buffer();
-
-      return {
-        content: buffer.toString('base64'),
-        filename,
-        type,
-        disposition: 'attachment',
-      }
-    }))
+  if ( typeof message !== 'string' ) {
+    throw new Error(`${errorBase}: message is not a string or is empty`);
   }
 
   console.log('Sending mail...');
 
-  try {
-    await sgMail.send(msg);
-  } catch (error) {
-    console.error(`${errorBase}: ${error.message}`);
+  const { data, error } = await resend.emails.send({
+    from: `Space Jelly Cron <${from}>`,
+    to: [to],
+    subject: subject || 'Space Jelly Cron',
+    text: message,
+    html: message.replace(/\r\n/g, '<br>'),
+  });
+
+  if (error) {
+    throw new Error(`${errorBase}: ${error.message}`);
   }
+
+  console.log('Mail sent successfully.');
+
+  return data;  
 }
 
 module.exports.sendMail = sendMail;

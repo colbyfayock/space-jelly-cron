@@ -1,0 +1,23 @@
+name: SSL Check
+
+on:
+  schedule:
+    - cron: "0 0 1 * *"
+  workflow_dispatch:
+
+
+jobs:
+  rss:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - run: npm install
+
+      - run: node src/ssl-check.js
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
