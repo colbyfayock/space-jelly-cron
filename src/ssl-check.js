@@ -4,7 +4,7 @@ const tls = require('tls');
 const { sendMail } = require('../src/lib/mail');
 
 const SSL_HOSTS = process.env.SSL_HOSTS?.split(',') || [];
-const DAYS_THRESHOLD = 31; // Number of days before expiration to trigger a warning
+const DAYS_THRESHOLD = 60; // Number of days before expiration to trigger a warning
 
 (async function run() {
   console.log(`Checking SSL certificates...`);
