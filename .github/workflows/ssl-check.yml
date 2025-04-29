@@ -21,3 +21,6 @@ jobs:
       - run: node src/ssl-check.js
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          SSL_HOSTS: ${{ secrets.SSL_HOSTS }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
